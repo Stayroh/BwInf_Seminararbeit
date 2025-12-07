@@ -1,0 +1,35 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {section}{\numberline {1}Aufgabe Bibertomograph}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Fragestellung}{1}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Lösungsidee}{1}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Theoretische Grundlagen}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Constraint Satisfaction Problems}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Backtracking}{2}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Constraint Propagation}{2}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Verwendete Java-Konzepte}{3}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Programmstruktur}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Übersicht der Klassen}{3}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Main.java -- Hauptprogramm}{3}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Grid.java -- Das Raster}{4}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Der Solver-Algorithmus}{5}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Die Heatmap-Heuristik}{6}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Backtracking mit Heuristik}{6}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Constraint Propagation}{7}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Forward Checking}{8}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Eingabe und Ausgabe}{9}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Eingabeformat}{9}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Ausgabeformat}{10}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Beispiele aus dem Wettbewerb}{10}{section.6}%
+\contentsline {subsection}{\numberline {6.1}tomograph00.txt (8×8)}{10}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}tomograph01.txt (2×2)}{11}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}tomograph02.txt (4×4)}{11}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}tomograph03.txt (4×4) -- Mehrere Lösungen}{12}{subsection.6.4}%
+\contentsline {section}{\numberline {7}Fazit und Ausblick}{12}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Was funktioniert gut?}{12}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Was war schwierig?}{13}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Mögliche Verbesserungen}{13}{subsection.7.3}%
+\contentsline {section}{\numberline {8}Quellcode}{13}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Constraints.java -- Vollständig}{13}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Grid.java -- toString Methode}{14}{subsection.8.2}%
+\contentsline {section}{\numberline {9}Quellenverzeichnis}{14}{section.9}%
+\contentsline {section}{Eidesstattliche Erklärung}{16}{section*.2}%

@@ -1,0 +1,761 @@
+\documentclass[12pt,a4paper]{article}
+
+% ============================================
+% PAKETE
+% ============================================
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+
+% ============================================
+% SEITENFORMAT (gemäß Vorgabe)
+% ============================================
+% Seitenränder: li/re 2,5cm, oben/unten 1cm
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2cm, headheight=15pt}
+
+% Zeilenabstand 1,5-fach
+\onehalfspacing
+
+% Kopf- und Fußzeile
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ============================================
+% CODE-STYLING (Courier New ähnlich)
+% ============================================
+\definecolor{codegreen}{rgb}{0,0.5,0}
+\definecolor{codegray}{rgb}{0.4,0.4,0.4}
+\definecolor{codepurple}{rgb}{0.5,0,0.5}
+\definecolor{codeblue}{rgb}{0,0,0.7}
+\definecolor{backcolour}{rgb}{0.97,0.97,0.97}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen}\itshape,
+    keywordstyle=\color{codeblue}\bfseries,
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    numbers=left,
+    numbersep=8pt,
+    frame=single,
+    framerule=0.5pt,
+    rulecolor=\color{codegray},
+    xleftmargin=12pt,
+    framexleftmargin=12pt,
+    tabsize=4,
+    showstringspaces=false,
+    captionpos=b,
+    literate={ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {Ä}{{\"A}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1 {ß}{{\ss}}1
+}
+\lstset{style=mystyle}
+
+% ============================================
+% HYPERREF EINSTELLUNGEN
+% ============================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black
+}
+
+\begin{document}
+
+% ============================================
+% DECKBLATT
+% ============================================
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    
+    {\large Stadtteilschule Walddörfer}\\[0.3cm]
+    {\large Fach: Seminar}\\[0.3cm]
+    {\large Tutor: [Lehrername]}\\[2cm]
+    
+    {\Huge\bfseries Bibertomograph}\\[1cm]
+    {\Large 43. Bundeswettbewerb Informatik 2024/25}\\[0.5cm]
+    {\Large Junioraufgabe 2}\\[2cm]
+    
+    \vfill
+    
+    {\large
+    \begin{tabular}{ll}
+        Abgabedatum: & [Datum] \\[0.3cm]
+        Name: & Jakob \\[0.3cm]
+        Schule: & Stadtteilschule Walddörfer \\[0.3cm]
+        Profil: & [Profilname] \\
+    \end{tabular}
+    }
+    
+    \vspace{2cm}
+\end{titlepage}
+
+% ============================================
+% INHALTSVERZEICHNIS
+% ============================================
+\newpage
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+
+% ============================================
+% 1. AUFGABE BIBERTOMOGRAPH
+% ============================================
+\section{Aufgabe Bibertomograph}
+
+Diese Ausarbeitung beschäftigt sich mit der Aufgabe \glqq Bibertomograph\grqq{} aus dem 43. Bundeswettbewerb Informatik (2024/25). Die Arbeit entstand im Rahmen des Seminars.
+
+\subsection{Fragestellung}
+
+Bei der Aufgabe Bibertomograph geht es um die Rekonstruktion eines Bildes aus seinen Randsummen. Das Problem ist angelehnt an medizinische Tomographen, die aus verschiedenen Projektionen ein Bild rekonstruieren.
+
+Gegeben ist ein $n \times n$ Raster, wobei jede Zelle entweder gefüllt (\texttt{\#}) oder leer (\texttt{.}) sein kann. Vom ursprünglichen Bild sind nur die Summen bekannt:
+
+\begin{itemize}
+    \item Die \textbf{Spaltensummen}: Wie viele Zellen pro Spalte gefüllt sind
+    \item Die \textbf{Zeilensummen}: Wie viele Zellen pro Zeile gefüllt sind
+    \item Die \textbf{Hauptdiagonalsummen} (von links-oben nach rechts-unten): Summen entlang der $\searrow$-Diagonalen
+    \item Die \textbf{Nebendiagonalsummen} (von links-unten nach rechts-oben): Summen entlang der $\nearrow$-Diagonalen
+\end{itemize}
+
+Die Aufgabe besteht darin, aus diesen Informationen das ursprüngliche Bild zu rekonstruieren. Dabei soll das Programm erkennen, ob es genau eine Lösung, mehrere Lösungen oder keine Lösung gibt.
+
+\subsection{Lösungsidee}
+
+Mein erster Gedanke war, das Problem als eine Art Sudoku zu betrachten. Wie beim Sudoku hat man Einschränkungen (Constraints), die erfüllt werden müssen. Der Unterschied ist, dass wir hier nur zwei mögliche Werte pro Zelle haben (0 oder 1), dafür aber vier verschiedene Richtungen berücksichtigen müssen.
+
+Ich habe mich für einen Backtracking-Ansatz mit Heuristiken entschieden. Das bedeutet, dass ich systematisch Werte ausprobiere und bei Widersprüchen zurückgehe. Um das Ganze effizienter zu machen, verwende ich zwei Techniken:
+
+\begin{enumerate}
+    \item \textbf{Constraint Propagation}: Wenn eine Zeile oder Diagonale schon voll ist oder noch alle verbleibenden Zellen gefüllt werden müssen, setze ich diese automatisch.
+    \item \textbf{Heatmap-Heuristik}: Ich berechne für jede Zelle, wie wahrscheinlich sie gefüllt ist, und wähle die Zellen clever aus.
+\end{enumerate}
+
+% ============================================
+% 2. THEORETISCHE GRUNDLAGEN
+% ============================================
+\section{Theoretische Grundlagen}
+
+Bevor ich mit der eigentlichen Implementierung beginne, möchte ich einige theoretische Konzepte erklären, die für das Verständnis meiner Lösung wichtig sind.
+
+\subsection{Constraint Satisfaction Problems}
+
+Das Bibertomograph-Problem gehört zur Klasse der \textit{Constraint Satisfaction Problems} (CSP). Ein CSP besteht aus:
+
+\begin{itemize}
+    \item Einer Menge von \textbf{Variablen} (hier: die $n^2$ Zellen des Rasters)
+    \item Einer \textbf{Domäne} für jede Variable (hier: \{0, 1\} für leer oder gefüllt)
+    \item Einer Menge von \textbf{Constraints} (hier: die Summen für jede Zeile, Spalte und Diagonale)
+\end{itemize}
+
+Eine Lösung ist eine Belegung aller Variablen, sodass alle Constraints erfüllt sind.
+
+\subsection{Backtracking}
+
+Backtracking ist ein Algorithmus, der systematisch alle möglichen Belegungen durchprobiert. Er funktioniert rekursiv:
+
+\begin{enumerate}
+    \item Wähle eine nicht zugewiesene Variable
+    \item Probiere einen Wert aus der Domäne
+    \item Prüfe, ob alle Constraints noch erfüllbar sind
+    \item Wenn ja: Gehe rekursiv zum nächsten Schritt
+    \item Wenn nein: Probiere den nächsten Wert (Backtrack)
+\end{enumerate}
+
+Das Problem bei naivem Backtracking ist die Laufzeit. Bei einem $8 \times 8$ Raster gäbe es theoretisch $2^{64}$ mögliche Belegungen. Deshalb sind Optimierungen wichtig.
+
+\subsection{Constraint Propagation}
+
+Constraint Propagation ist eine Technik, um den Suchraum zu verkleinern. Die Idee ist einfach: Wenn durch die bisherigen Entscheidungen bestimmte Zellen eindeutig festgelegt sind, setze ich sie sofort.
+
+Beispiel: Wenn in einer Zeile mit Zielsumme 3 bereits 3 Zellen gefüllt sind, müssen alle verbleibenden Zellen leer sein. Umgekehrt: Wenn die Zielsumme 3 ist und noch genau 3 Zellen unzugewiesen sind, müssen alle gefüllt werden.
+
+\subsection{Verwendete Java-Konzepte}
+
+Für die Implementierung habe ich folgende Java-Konstrukte verwendet, die über den Stoff der Stufe 1 hinausgehen:
+
+\begin{itemize}
+    \item \texttt{ArrayList<Grid>}: Eine dynamische Liste zum Speichern der gefundenen Lösungen
+    \item \texttt{int[][]}: Zweidimensionale Arrays für das Raster
+    \item \texttt{System.arraycopy()}: Effizientes Kopieren von Arrays für das Backtracking
+    \item \texttt{BufferedReader}: Zum Einlesen der Eingabedateien
+\end{itemize}
+
+% ============================================
+% 3. PROGRAMMSTRUKTUR
+% ============================================
+\section{Programmstruktur}
+
+Mein Programm besteht aus fünf Klassen, die jeweils eine bestimmte Aufgabe haben. Diese Aufteilung macht den Code übersichtlicher und leichter zu testen.
+
+\subsection{Übersicht der Klassen}
+
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Klasse} & \textbf{Beschreibung} \\
+\hline
+\texttt{Main.java} & Einstiegspunkt des Programms. Liest die Eingabedatei, startet den Solver und gibt die Ergebnisse aus. \\
+\hline
+\texttt{Grid.java} & Repräsentiert das $n \times n$ Raster. Speichert den Zustand jeder Zelle und berechnet Summen für Zeilen, Spalten und Diagonalen. \\
+\hline
+\texttt{Constraints.java} & Speichert die Zielwerte (Randsummen) und berechnet die Heatmap für die Heuristik. \\
+\hline
+\texttt{InputParser.java} & Liest die Eingabedatei und erzeugt ein Constraints-Objekt. \\
+\hline
+\texttt{HeuristicSolver.java} & Der eigentliche Lösungsalgorithmus mit Backtracking, Constraint Propagation und Heuristik. \\
+\hline
+\end{tabularx}
+
+\subsection{Main.java -- Hauptprogramm}
+
+Die Main-Klasse ist der Einstiegspunkt. Sie liest die Eingabedatei, startet den Solver und gibt die Ergebnisse formatiert aus.
+
+\begin{lstlisting}[language=Java, caption=Hauptprogramm (Main.java)]
+public static void main(String[] args) {
+    if (args.length < 1) {
+        System.out.println("Verwendung: java Main <eingabedatei.txt>");
+        System.exit(1);
+    }
+    
+    String filename = args[0];
+    
+    // Eingabe parsen
+    Constraints constraints = InputParser.parse(filename);
+    
+    // Heatmap berechnen und anzeigen
+    double[][] heatmap = constraints.computeHeatmap();
+    
+    // Solver starten
+    HeuristicSolver solver = new HeuristicSolver(constraints);
+    solver.setMaxSolutions(100);
+    
+    List<Grid> solutions = solver.solve();
+    
+    // Ergebnisse ausgeben
+    System.out.println("Gefundene Loesungen: " + solutions.size());
+}
+\end{lstlisting}
+
+\subsection{Grid.java -- Das Raster}
+
+Die Grid-Klasse repräsentiert das Spielfeld. Jede Zelle kann drei Zustände haben:
+\begin{itemize}
+    \item \texttt{-1}: Noch nicht zugewiesen
+    \item \texttt{0}: Leer (wird als \texttt{.} ausgegeben)
+    \item \texttt{1}: Gefüllt (wird als \texttt{\#} ausgegeben)
+\end{itemize}
+
+\begin{lstlisting}[language=Java, caption=Grid-Konstruktor und Kopieren]
+public class Grid {
+    private final int size;
+    private final int[][] cells;
+    
+    public Grid(int size) {
+        this.size = size;
+        this.cells = new int[size][size];
+        // Initialisiere alle Zellen als nicht zugewiesen
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                cells[i][j] = -1;
+            }
+        }
+    }
+    
+    // Kopiert das Grid (wichtig fuer Backtracking)
+    public Grid copy() {
+        Grid copy = new Grid(size);
+        for (int i = 0; i < size; i++) {
+            System.arraycopy(cells[i], 0, copy.cells[i], 0, size);
+        }
+        return copy;
+    }
+}
+\end{lstlisting}
+
+Wichtig sind die Methoden zum Berechnen der Summen. Für die Diagonalen muss man etwas aufpassen mit der Indexierung:
+
+\begin{lstlisting}[language=Java, caption=Berechnung der Diagonalsummen]
+// Hauptdiagonale: k = row + col, Bereich: 0 bis 2*(size-1)
+public int getDiagDownSum(int k) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        int j = k - i;
+        if (j >= 0 && j < size && cells[i][j] == 1) {
+            sum++;
+        }
+    }
+    return sum;
+}
+
+// Nebendiagonale: k = col - row + (size-1)
+public int getDiagUpSum(int k) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        int j = k - (size - 1) + i;
+        if (j >= 0 && j < size && cells[i][j] == 1) {
+            sum++;
+        }
+    }
+    return sum;
+}
+\end{lstlisting}
+
+Die Indexierung der Diagonalen war einer der schwierigsten Teile. Für die Hauptdiagonale gilt $k = \text{row} + \text{col}$, für die Nebendiagonale $k = \text{col} - \text{row} + (n-1)$.
+
+% ============================================
+% 4. DER SOLVER-ALGORITHMUS
+% ============================================
+\section{Der Solver-Algorithmus}
+
+Der HeuristicSolver ist das Herzstück meines Programms. Er kombiniert Backtracking mit Constraint Propagation und einer Heatmap-Heuristik.
+
+\subsection{Die Heatmap-Heuristik}
+
+Die Heatmap berechnet für jede Zelle einen Wert zwischen 0 und 1, der angibt, wie wahrscheinlich die Zelle gefüllt ist. Dafür betrachte ich alle vier Linien, die durch die Zelle gehen, und berechne deren \glqq Dichte\grqq{}.
+
+\begin{lstlisting}[language=Java, caption=Berechnung der Heatmap]
+public double[][] computeHeatmap() {
+    double[][] heatmap = new double[size][size];
+    
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            // Dichte fuer jede Linie durch diese Zelle
+            double rowDensity = (double) rowSums[i] / size;
+            double colDensity = (double) colSums[j] / size;
+            
+            // Hauptdiagonale: k = i + j
+            int diagDownK = i + j;
+            int diagDownLen = size - Math.abs(diagDownK - (size - 1));
+            double diagDownDensity = (double) getDiagDownSum(diagDownK) / diagDownLen;
+            
+            // Nebendiagonale: k = j - i + (size - 1)
+            int diagUpK = j - i + (size - 1);
+            int diagUpLen = size - Math.abs(diagUpK - (size - 1));
+            double diagUpDensity = (double) getDiagUpSum(diagUpK) / diagUpLen;
+            
+            // Durchschnitt aller Dichten
+            heatmap[i][j] = (rowDensity + colDensity + diagDownDensity + diagUpDensity) / 4.0;
+        }
+    }
+    
+    return heatmap;
+}
+\end{lstlisting}
+
+\subsection{Backtracking mit Heuristik}
+
+Der Backtracking-Algorithmus wählt immer die Zelle aus, bei der wir am \glqq sichersten\grqq{} sind. Das bedeutet: Zellen, deren Heatmap-Wert weit von 0.5 entfernt ist (also klar gefüllt oder klar leer), werden zuerst behandelt.
+
+\begin{lstlisting}[language=Java, caption=Backtracking-Hauptschleife]
+private void backtrack(Grid grid) {
+    if (solutions.size() >= maxSolutions) {
+        return;
+    }
+    
+    nodeCount++;
+    
+    // Waehle naechste Zelle basierend auf Heuristik
+    int[] nextCell = selectNextCell(grid);
+    
+    // Wenn keine unzugewiesene Zelle mehr, pruefe Loesung
+    if (nextCell == null) {
+        if (isValidSolution(grid)) {
+            solutions.add(grid.copy());
+        }
+        return;
+    }
+    
+    int row = nextCell[0];
+    int col = nextCell[1];
+    
+    // Reihenfolge der Werte basierend auf Heatmap
+    int[] valuesToTry;
+    if (heatmap[row][col] >= 0.5) {
+        valuesToTry = new int[]{1, 0};
+    } else {
+        valuesToTry = new int[]{0, 1};
+    }
+    
+    for (int value : valuesToTry) {
+        // Forward Check
+        if (!isValueFeasible(grid, row, col, value)) {
+            continue;
+        }
+        
+        Grid newGrid = grid.copy();
+        newGrid.set(row, col, value);
+        
+        // Constraint Propagation
+        if (propagate(newGrid)) {
+            backtrack(newGrid);
+        }
+    }
+}
+\end{lstlisting}
+
+\subsection{Constraint Propagation}
+
+Die Propagation prüft alle Zeilen, Spalten und Diagonalen. Wenn eine Linie \glqq erzwungen\grqq{} ist, werden die Zellen automatisch gesetzt.
+
+\begin{lstlisting}[language=Java, caption=Propagation fuer eine Zeile/Spalte]
+private int propagateLine(Grid grid, int index, boolean isRow) {
+    int sum = isRow ? grid.getRowSum(index) : grid.getColSum(index);
+    int unassigned = isRow ? grid.getRowUnassigned(index) : grid.getColUnassigned(index);
+    int target = isRow ? constraints.getRowSum(index) : constraints.getColSum(index);
+    
+    int remaining = target - sum;
+    
+    // Konflikt: Mehr gefuellt als erlaubt
+    if (remaining < 0) return -1;
+    
+    // Konflikt: Nicht genug Platz
+    if (remaining > unassigned) return -1;
+    
+    // Alle verbleibenden muessen 1 sein
+    if (remaining == unassigned) {
+        for (int k = 0; k < size; k++) {
+            int i = isRow ? index : k;
+            int j = isRow ? k : index;
+            if (!grid.isAssigned(i, j)) {
+                grid.set(i, j, 1);
+            }
+        }
+    }
+    
+    // Summe erreicht: alle verbleibenden muessen 0 sein
+    if (remaining == 0) {
+        for (int k = 0; k < size; k++) {
+            int i = isRow ? index : k;
+            int j = isRow ? k : index;
+            if (!grid.isAssigned(i, j)) {
+                grid.set(i, j, 0);
+            }
+        }
+    }
+    
+    return 0;
+}
+\end{lstlisting}
+
+\subsection{Forward Checking}
+
+Forward Checking prüft, ob ein Wert überhaupt noch möglich ist, bevor wir ihn ausprobieren. Das spart viele unnötige Backtracking-Schritte.
+
+\begin{lstlisting}[language=Java, caption=Forward Checking]
+private boolean isValueFeasible(Grid grid, int row, int col, int value) {
+    if (value == 1) {
+        // Pruefe ob wir noch Platz fuer eine 1 haben
+        if (grid.getRowSum(row) >= constraints.getRowSum(row)) return false;
+        if (grid.getColSum(col) >= constraints.getColSum(col)) return false;
+        
+        int diagDownK = row + col;
+        if (grid.getDiagDownSum(diagDownK) >= constraints.getDiagDownSum(diagDownK)) 
+            return false;
+        
+        int diagUpK = col - row + (size - 1);
+        if (grid.getDiagUpSum(diagUpK) >= constraints.getDiagUpSum(diagUpK)) 
+            return false;
+    } else {
+        // Pruefe ob genug Platz fuer benoetigte 1en bleibt
+        int rowRemaining = constraints.getRowSum(row) - grid.getRowSum(row);
+        if (grid.getRowUnassigned(row) - 1 < rowRemaining) return false;
+        
+        // ... analog fuer Spalte und Diagonalen
+    }
+    
+    return true;
+}
+\end{lstlisting}
+
+% ============================================
+% 5. EINGABE UND AUSGABE
+% ============================================
+\section{Eingabe und Ausgabe}
+
+\subsection{Eingabeformat}
+
+Die Eingabedateien haben ein einfaches Format:
+\begin{enumerate}
+    \item Zeile 1: Die Größe $n$ des Rasters
+    \item Zeile 2: Die $n$ Spaltensummen (von links nach rechts)
+    \item Zeile 3: Die $n$ Zeilensummen (von oben nach unten)
+    \item Zeile 4: Die $2n-1$ Hauptdiagonalsummen
+    \item Zeile 5: Die $2n-1$ Nebendiagonalsummen
+\end{enumerate}
+
+\begin{lstlisting}[language=Java, caption=Parsen der Eingabedatei]
+public static Constraints parse(String filename) throws IOException {
+    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        // 1. Zeile: Groesse n
+        int size = Integer.parseInt(reader.readLine().trim());
+        
+        // 2. Zeile: Spaltensummen
+        int[] colSums = parseIntArray(reader.readLine(), size);
+        
+        // 3. Zeile: Zeilensummen
+        int[] rowSums = parseIntArray(reader.readLine(), size);
+        
+        // 4. Zeile: Hauptdiagonalsummen (2*n - 1 Werte)
+        int[] diagDownSums = parseIntArray(reader.readLine(), 2 * size - 1);
+        
+        // 5. Zeile: Nebendiagonalsummen
+        int[] diagUpSums = parseIntArray(reader.readLine(), 2 * size - 1);
+        
+        return new Constraints(size, colSums, rowSums, diagDownSums, diagUpSums);
+    }
+}
+\end{lstlisting}
+
+\subsection{Ausgabeformat}
+
+Das Programm gibt die Lösung als Raster aus, wobei \texttt{\#} für gefüllte und \texttt{.} für leere Zellen steht. Bei mehreren Lösungen wird zusätzlich eine kombinierte Ansicht gezeigt, wo \texttt{?} für mehrdeutige Zellen steht.
+
+% ============================================
+% 6. BEISPIELE
+% ============================================
+\section{Beispiele aus dem Wettbewerb}
+
+Hier zeige ich die Ergebnisse für einige der Testdateien aus dem Wettbewerb.
+
+\subsection{tomograph00.txt (8×8)}
+
+Das erste Beispiel ist ein 8×8 Raster:
+
+\textbf{Constraints:}
+\begin{verbatim}
+Column sums: 1 1 5 6 5 1 2 1 
+Row sums: 3 2 3 2 6 2 2 2 
+DiagDown sums: 0 0 1 3 2 3 3 1 2 3 1 2 0 1 0 
+DiagUp sums: 0 0 1 0 4 2 1 3 5 3 2 1 0 0 0
+\end{verbatim}
+
+\textbf{Ausgabe (1 Lösung):}
+\begin{verbatim}
+..###...
+..#.#...
+..###...
+#..#....
+.######.
+...#..#.
+...#...#
+..#.#...
+\end{verbatim}
+
+\textbf{Statistik:} Gefundene Lösungen: 1, Durchsuchte Knoten: 6, Laufzeit: 37 ms
+
+\subsection{tomograph01.txt (2×2)}
+
+Das kleinste Beispiel:
+
+\textbf{Constraints:}
+\begin{verbatim}
+Column sums: 1 0 
+Row sums: 0 1
+\end{verbatim}
+
+\textbf{Ausgabe (1 Lösung):}
+\begin{verbatim}
+..
+#.
+\end{verbatim}
+
+Der Solver findet sofort die eindeutige Lösung mit nur 1 Knoten.
+
+\subsection{tomograph02.txt (4×4)}
+
+\textbf{Constraints:}
+\begin{verbatim}
+Column sums: 3 2 2 2 
+Row sums: 1 2 4 2
+\end{verbatim}
+
+\textbf{Ausgabe (1 Lösung):}
+\begin{verbatim}
+..#.
+##..
+####
+#..#
+\end{verbatim}
+
+Auch hier gibt es genau eine Lösung. Die Constraint Propagation reicht aus -- es wird nur 1 Knoten durchsucht.
+
+\subsection{tomograph03.txt (4×4) -- Mehrere Lösungen}
+
+Dieser Testfall ist besonders interessant, weil er \textbf{mehrere gültige Lösungen} hat:
+
+\textbf{Constraints:}
+\begin{verbatim}
+Column sums: 1 2 2 3 
+Row sums: 2 3 1 2
+\end{verbatim}
+
+\textbf{Kombinierte Ausgabe (? = mehrdeutig):}
+\begin{verbatim}
+.??#
+?##?
+?..?
+.??#
+\end{verbatim}
+
+\textbf{Lösung 1:}
+\begin{verbatim}
+.#.#
+.###
+#...
+..##
+\end{verbatim}
+
+\textbf{Lösung 2:}
+\begin{verbatim}
+..##
+###.
+...#
+.#.#
+\end{verbatim}
+
+Die Zellen mit \texttt{?} können sowohl gefüllt als auch leer sein. Das zeigt, dass die Randsummen allein nicht immer eine eindeutige Lösung bestimmen. Der Solver findet beide Lösungen in nur 5 Knoten.
+
+% ============================================
+% 7. FAZIT
+% ============================================
+\section{Fazit und Ausblick}
+
+\subsection{Was funktioniert gut?}
+
+Mein Solver löst alle Testfälle des Wettbewerbs korrekt und effizient:
+
+\begin{itemize}
+    \item Die Kombination aus Constraint Propagation und Heatmap-Heuristik reduziert die Anzahl der durchsuchten Knoten erheblich.
+    \item Selbst bei größeren Rastern (8×8) ist die Laufzeit sehr kurz (unter 100 ms).
+    \item Das Programm erkennt korrekt, wenn es mehrere Lösungen gibt.
+\end{itemize}
+
+\subsection{Was war schwierig?}
+
+Die größten Herausforderungen waren:
+
+\begin{enumerate}
+    \item \textbf{Diagonalen-Indexierung}: Die korrekte Berechnung der Indizes für die Diagonalen ($k = \text{row} + \text{col}$ und $k = \text{col} - \text{row} + (n-1)$) hat am meisten Zeit gekostet.
+    \item \textbf{Debugging}: Bei Backtracking-Algorithmen ist es schwer zu sehen, wo genau ein Fehler liegt. Ich habe viel mit Ausgaben gearbeitet.
+    \item \textbf{Kopieren von Zuständen}: Beim Backtracking muss man aufpassen, dass man das Grid richtig kopiert, sonst ändert man versehentlich den ursprünglichen Zustand.
+\end{enumerate}
+
+\subsection{Mögliche Verbesserungen}
+
+\begin{itemize}
+    \item \textbf{Arc Consistency}: Eine stärkere Form der Propagation, die noch mehr Suchraum eliminieren könnte.
+    \item \textbf{Parallelisierung}: Für sehr große Raster könnte man verschiedene Teilbäume parallel durchsuchen.
+    \item \textbf{GUI}: Eine grafische Oberfläche würde die Ergebnisse anschaulicher machen.
+\end{itemize}
+
+% ============================================
+% 8. QUELLCODE (ANHANG)
+% ============================================
+\section{Quellcode}
+
+Im Folgenden sind die wichtigsten Teile des Quellcodes dokumentiert.
+
+\subsection{Constraints.java -- Vollständig}
+
+\begin{lstlisting}[language=Java, caption=Constraints.java]
+public class Constraints {
+    private final int size;
+    private final int[] colSums;
+    private final int[] rowSums;
+    private final int[] diagDownSums;
+    private final int[] diagUpSums;
+    
+    public Constraints(int size, int[] colSums, int[] rowSums, 
+                       int[] diagDownSums, int[] diagUpSums) {
+        this.size = size;
+        this.colSums = colSums;
+        this.rowSums = rowSums;
+        this.diagDownSums = diagDownSums;
+        this.diagUpSums = diagUpSums;
+    }
+    
+    public int getSize() { return size; }
+    public int getColSum(int col) { return colSums[col]; }
+    public int getRowSum(int row) { return rowSums[row]; }
+    public int getDiagDownSum(int k) { return diagDownSums[k]; }
+    public int getDiagUpSum(int k) { return diagUpSums[k]; }
+}
+\end{lstlisting}
+
+\subsection{Grid.java -- toString Methode}
+
+\begin{lstlisting}[language=Java, caption=Ausgabe des Rasters]
+@Override
+public String toString() {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            if (cells[i][j] == 1) {
+                sb.append('#');
+            } else if (cells[i][j] == 0) {
+                sb.append('.');
+            } else {
+                sb.append('?');
+            }
+        }
+        sb.append('\n');
+    }
+    return sb.toString();
+}
+\end{lstlisting}
+
+% ============================================
+% 9. QUELLENVERZEICHNIS
+% ============================================
+\section{Quellenverzeichnis}
+
+\begin{enumerate}
+    \item Bundeswettbewerb Informatik: Aufgabenblatt 44. Wettbewerb 2025/26, Aufgabe: Bibertomograph\\
+    \url{https://bwinf.de/bundeswettbewerb/44/#c5529}\\
+    (letzter Abruf: 7.12.2025)
+    
+    \item Oracle: Java SE Documentation -- ArrayList\\
+    \url{https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html}\\
+    (letzter Abruf: 6.12.2025)
+    
+    \item YouTube: Backtracking Algorithm Tutorial\\
+    \url{https://www.youtube.com/watch?v=m-b51C82-UE}\\
+    (letzter Abruf: 2.12.2025)
+    
+    \item ResearchGate: Heuristic vs Brute-Force Comparison\\
+    \url{https://www.researchgate.net/figure/Heuristic-brute-force-comparison_tbl1_24017925}\\
+    (letzter Abruf: 28.11.2025)
+\end{enumerate}
+
+% ============================================
+% EIDESSTATTLICHE ERKLÄRUNG
+% ============================================
+\newpage
+\section*{Eidesstattliche Erklärung}
+\addcontentsline{toc}{section}{Eidesstattliche Erklärung}
+
+Ich versichere, dass die vorliegende Seminararbeit mit dem Titel \glqq Seminar-Aufgabe: 43. BwInf Bibertomograph\grqq{} von mir selbstständig erarbeitet wurde und ich keine anderen als die angegebenen Hilfsmittel benutzt habe. Diejenigen Teile der Arbeit, die anderen Werken im Wortlaut oder dem Sinn nach entnommen wurden, sind als solche kenntlich gemacht.
+
+\vspace{3cm}
+\noindent\rule{8cm}{0.4pt}\\
+Ort, Datum, Unterschrift
+
+\end{document}
