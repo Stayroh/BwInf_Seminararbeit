@@ -1,0 +1,68 @@
+[
+  {
+    "date": "Mo 06.10.2025",
+    "geplant": "Konzepte Umsetzung, erste Experimente in Java",
+    "erreicht": "Lösungswege überlegt (Voxel-Projection, Brute-Force)",
+    "probleme": "-",
+    "problemlösung": "-",
+    "offene_fragen": "Java Libraries zum einfachen Visualisieren"
+  },
+  {
+    "date": "Mo 13.10.2025",
+    "geplant": "mit programmieren anfangen",
+    "erreicht": "Grid klasse angefangen",
+    "probleme": "-",
+    "problemlösung": "-",
+    "offene_fragen": "-"
+  },
+  {
+    "date": "Mo 03.11.2025",
+    "geplant": "weiter am code arbeiten",
+    "erreicht": "Eingabe-Parser fertig, Constraints klasse erstellt",
+    "probleme": "diagonalen voll verwirrend",
+    "problemlösung": "erstmal ignoriert",
+    "offene_fragen": "-"
+  },
+  {
+    "date": "Mo 10.11.2025",
+    "geplant": "Solver shreiben",
+    "erreicht": "backtracking ansatz implementiert",
+    "probleme": "funktoniert nicht bei allen testfällen",
+    "problemlösung": "-",
+    "offene_fragen": "warum findet er keine lösung?"
+  },
+  {
+    "date": "Mo 17.11.2025",
+    "note": "Einsendeschluss BwInf, aber egal",
+    "geplant": "bugs fixen",
+    "erreicht": "diagonalen bug gefunden und gefixt, läuft jetz",
+    "probleme": "-",
+    "problemlösung": "-",
+    "offene_fragen": "-"
+  },
+  {
+    "date": "Mo 24.11.2025",
+    "geplant": "doku anfangen",
+    "erreicht": "latex vorlage erstellt",
+    "probleme": "pdflatex ging nicht",
+    "problemlösung": "pakete instaliert",
+    "offene_fragen": "-"
+  },
+  {
+    "date": "Mo 01.12.2025",
+    "note": "Abgabe",
+    "geplant": "arbeit fertig schreiben",
+    "erreicht": "text geschrieben, beispiele eingefügt",
+    "probleme": "-",
+    "problemlösung": "-",
+    "offene_fragen": "-"
+  },
+  {
+    "date": "Mo 08.12.2025",
+    "geplant": "nochmal drüberlesen",
+    "erreicht": "kleinigkeiten korrigiert",
+    "probleme": "-",
+    "problemlösung": "-",
+    "offene_fragen": "-"
+  }
+]

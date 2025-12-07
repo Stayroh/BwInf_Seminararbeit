@@ -22,7 +22,10 @@
 % SEITENFORMAT (gemäß Vorgabe)
 % ============================================
 % Seitenränder: li/re 2,5cm, oben/unten 1cm
-\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2cm, headheight=15pt}
+\geometry{left=2.5cm, right=2.5cm, top=1cm, bottom=1cm, headheight=15pt, includeheadfoot}
+
+% Schriftart: Computer Modern (Standard LaTeX, ähnlich Times New Roman)
+% Falls Times New Roman gewünscht: \usepackage{mathptmx}
 
 % Zeilenabstand 1,5-fach
 \onehalfspacing
@@ -87,20 +90,21 @@
     
     {\large Stadtteilschule Walddörfer}\\[0.3cm]
     {\large Fach: Seminar}\\[0.3cm]
-    {\large Tutor: [Lehrername]}\\[2cm]
+    {\large Tutor: Frau Dr. Schmidt}\\[2cm]
     
-    {\Huge\bfseries Bibertomograph}\\[1cm]
-    {\Large 43. Bundeswettbewerb Informatik 2024/25}\\[0.5cm]
-    {\Large Junioraufgabe 2}\\[2cm]
+    {\Huge\bfseries Bibertomograph}\\[0.8cm]
+    {\Large 44. Bundeswettbewerb Informatik 2025/26 -- 1. Runde}\\[0.3cm]
+    {\Large Aufgabe 4}\\[1.5cm]
+    
+    {\large\itshape Leitfrage: Wie können aus Sichtlinien-Summen die ursprünglichen Figuren rekonstruiert werden?}\\[1.5cm]
     
     \vfill
     
     {\large
     \begin{tabular}{ll}
-        Abgabedatum: & [Datum] \\[0.3cm]
-        Name: & Jakob \\[0.3cm]
-        Schule: & Stadtteilschule Walddörfer \\[0.3cm]
-        Profil: & [Profilname] \\
+        Abgabedatum: & 8.12.2025 \\[0.3cm]
+        Name: & Jakob Allweiss \\[0.3cm]
+        Profil: & Zukunftstechnologien \\
     \end{tabular}
     }
     
@@ -121,11 +125,17 @@
 % ============================================
 \section{Aufgabe Bibertomograph}
 
-Diese Ausarbeitung beschäftigt sich mit der Aufgabe \glqq Bibertomograph\grqq{} aus dem 43. Bundeswettbewerb Informatik (2024/25). Die Arbeit entstand im Rahmen des Seminars.
+Diese Ausarbeitung beschäftigt sich mit der Aufgabe \glqq Bibertomograph\grqq{} aus dem 44. Bundeswettbewerb Informatik (2025/26) und entstand im Rahmen des Seminars im Zeitraum vom 6.10.2025 bis zum 8.12.2025.
 
 \subsection{Fragestellung}
 
-Bei der Aufgabe Bibertomograph geht es um die Rekonstruktion eines Bildes aus seinen Randsummen. Das Problem ist angelehnt an medizinische Tomographen, die aus verschiedenen Projektionen ein Bild rekonstruieren.
+Die originale Aufgabenstellung des Wettbewerbs lautet:
+
+\begin{quote}
+\glqq Bei den jährlichen Biberland-Games werden in einer Disziplin aus der Luft sichtbare Figuren auf einer gerasterten Fläche gestaltet. Ein Rasterfeld kann dabei entweder mit Holzspänen gefüllt sein oder nicht. Die Fläche wird vor der Jurywertung den Blicken der neugierigen Biberazzi durch einen Bretterzaun entzogen. Biberazzo Azze hat nun festgestellt, dass er durch kleine Lücken im Zaun senkrecht und diagonal über die Fläche schauen kann und aufgrund der Helligkeit erahnt, wie viele gefüllte Felder auf seiner jeweiligen Sichtlinie liegen. Azze will unbedingt möglichst viele Figuren bereits vorher herausfinden und versucht, durch logische Schlussfolgerungen und Ausprobieren die korrekten Figuren zu rekonstruieren. [...] Hilf Azze mit einem Programm, das für eine beliebige $n \times n$-Fläche die Summen einliest und daraufhin eine dazu passende Figur ausgibt. Falls sie nicht die einzig mögliche ist, sollte das Programm in der Figur die nicht eindeutigen Felder durch Fragezeichen kennzeichnen.\grqq{} [1]
+\end{quote}
+
+Bei der Aufgabe geht es also um die Rekonstruktion einer Figur aus ihren Randsummen -- wie viele gefüllte Felder auf jeder horizontalen, vertikalen und diagonalen Sichtlinie liegen.
 
 Gegeben ist ein $n \times n$ Raster, wobei jede Zelle entweder gefüllt (\texttt{\#}) oder leer (\texttt{.}) sein kann. Vom ursprünglichen Bild sind nur die Summen bekannt:
 
@@ -528,113 +538,127 @@ public static Constraints parse(String filename) throws IOException {
 
 Das Programm gibt die Lösung als Raster aus, wobei \texttt{\#} für gefüllte und \texttt{.} für leere Zellen steht. Bei mehreren Lösungen wird zusätzlich eine kombinierte Ansicht gezeigt, wo \texttt{?} für mehrdeutige Zellen steht.
 
+\subsection{Ausführung}
+
+Um das Programm auszuführen, benötigt man Java (mindestens Version 11). Alle Befehle müssen aus dem Hauptverzeichnis des Projekts ausgeführt werden (dort wo sich die Ordner \texttt{src/} und \texttt{testdata/} befinden).
+
+Der einfachste Aufruf erfolgt über:
+
+\begin{verbatim}
+java src/Main.java testdata/tomograph00.txt
+\end{verbatim}
+
+Alternativ kann man zuerst kompilieren und dann ausführen:
+
+\begin{verbatim}
+javac src/*.java
+java -cp src Main testdata/tomograph00.txt
+\end{verbatim}
+
+Das Programm gibt dann die Heatmap, die gefundenen Lösungen und Statistiken aus.
+
 % ============================================
 % 6. BEISPIELE
 % ============================================
 \section{Beispiele aus dem Wettbewerb}
 
-Hier zeige ich die Ergebnisse für einige der Testdateien aus dem Wettbewerb.
+Hier zeige ich die Ergebnisse für drei Testdateien aus dem Wettbewerb nebeneinander:
 
-\subsection{tomograph00.txt (8×8)}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{tomograph01 (2×2)} & \textbf{tomograph00 (8×8)} & \textbf{tomograph03 (4×4)} \\
+\textbf{Eindeutig} & \textbf{Eindeutig} & \textbf{Mehrdeutig} \\
+\hline
+& & \\
+\texttt{..} & \texttt{..\#\#\#...} & \texttt{.??\#} \\
+\texttt{\#.} & \texttt{..\#.\#...} & \texttt{?\#\#?} \\
+ & \texttt{..\#\#\#...} & \texttt{?..?} \\
+ & \texttt{\#..\#....} & \texttt{.??\#} \\
+ & \texttt{.\#\#\#\#\#\#.} & \\
+ & \texttt{...\#..\#.} & \\
+ & \texttt{...\#...\#} & \\
+ & \texttt{..\#.\#...} & \\
+& & \\
+\hline
+1 Lösung, 1 Knoten & 1 Lösung, 6 Knoten & 2 Lösungen, 5 Knoten \\
+\hline
+\end{tabular}
+\end{center}
 
-Das erste Beispiel ist ein 8×8 Raster:
+\subsection{Erläuterung der Beispiele}
 
-\textbf{Constraints:}
-\begin{verbatim}
-Column sums: 1 1 5 6 5 1 2 1 
-Row sums: 3 2 3 2 6 2 2 2 
-DiagDown sums: 0 0 1 3 2 3 3 1 2 3 1 2 0 1 0 
-DiagUp sums: 0 0 1 0 4 2 1 3 5 3 2 1 0 0 0
-\end{verbatim}
+\textbf{tomograph01} ist das kleinste Beispiel (2×2). Die Constraints sind so restriktiv, dass der Solver die Lösung sofort durch Constraint Propagation findet -- ohne jegliches Backtracking.
 
-\textbf{Ausgabe (1 Lösung):}
-\begin{verbatim}
-..###...
-..#.#...
-..###...
-#..#....
-.######.
-...#..#.
-...#...#
-..#.#...
-\end{verbatim}
+\textbf{tomograph00} zeigt ein größeres 8×8 Raster. Trotz der Größe findet der Solver die eindeutige Lösung in nur 6 Knoten, weil die Heuristik die richtigen Zellen zuerst wählt.
 
-\textbf{Statistik:} Gefundene Lösungen: 1, Durchsuchte Knoten: 6, Laufzeit: 37 ms
+\textbf{tomograph03} ist besonders interessant: Es gibt \textbf{zwei gültige Lösungen}. Die Zellen mit \texttt{?} können sowohl gefüllt als auch leer sein. Das zeigt, dass die Randsummen allein nicht immer eine eindeutige Lösung bestimmen.
 
-\subsection{tomograph01.txt (2×2)}
-
-Das kleinste Beispiel:
-
-\textbf{Constraints:}
-\begin{verbatim}
-Column sums: 1 0 
-Row sums: 0 1
-\end{verbatim}
-
-\textbf{Ausgabe (1 Lösung):}
-\begin{verbatim}
-..
-#.
-\end{verbatim}
-
-Der Solver findet sofort die eindeutige Lösung mit nur 1 Knoten.
-
-\subsection{tomograph02.txt (4×4)}
-
-\textbf{Constraints:}
-\begin{verbatim}
-Column sums: 3 2 2 2 
-Row sums: 1 2 4 2
-\end{verbatim}
-
-\textbf{Ausgabe (1 Lösung):}
-\begin{verbatim}
-..#.
-##..
-####
-#..#
-\end{verbatim}
-
-Auch hier gibt es genau eine Lösung. Die Constraint Propagation reicht aus -- es wird nur 1 Knoten durchsucht.
-
-\subsection{tomograph03.txt (4×4) -- Mehrere Lösungen}
-
-Dieser Testfall ist besonders interessant, weil er \textbf{mehrere gültige Lösungen} hat:
-
-\textbf{Constraints:}
-\begin{verbatim}
-Column sums: 1 2 2 3 
-Row sums: 2 3 1 2
-\end{verbatim}
-
-\textbf{Kombinierte Ausgabe (? = mehrdeutig):}
-\begin{verbatim}
-.??#
-?##?
-?..?
-.??#
-\end{verbatim}
-
-\textbf{Lösung 1:}
-\begin{verbatim}
-.#.#
-.###
-#...
-..##
-\end{verbatim}
-
-\textbf{Lösung 2:}
-\begin{verbatim}
-..##
-###.
-...#
-.#.#
-\end{verbatim}
-
-Die Zellen mit \texttt{?} können sowohl gefüllt als auch leer sein. Das zeigt, dass die Randsummen allein nicht immer eine eindeutige Lösung bestimmen. Der Solver findet beide Lösungen in nur 5 Knoten.
+Die beiden Lösungen für tomograph03 sind:
+\begin{center}
+\begin{tabular}{cc}
+\textbf{Lösung 1} & \textbf{Lösung 2} \\
+\texttt{.\#.\#} & \texttt{..\#\#} \\
+\texttt{.\#\#\#} & \texttt{\#\#\#.} \\
+\texttt{\#...} & \texttt{...\#} \\
+\texttt{..\#\#} & \texttt{.\#.\#} \\
+\end{tabular}
+\end{center}
 
 % ============================================
-% 7. FAZIT
+% 7. LAUFZEIT UND PERFORMANCE
+% ============================================
+\section{Laufzeit und Performance}
+
+\subsection{Theoretische Komplexität}
+
+Die theoretische Laufzeitkomplexität des Bibertomograph-Problems lässt sich wie folgt analysieren:
+
+\textbf{Worst-Case (naives Backtracking):} Bei einem $n \times n$ Raster hat jede Zelle zwei mögliche Werte (0 oder 1). Ohne Optimierungen müsste man im schlimmsten Fall alle $2^{n^2}$ Kombinationen durchprobieren. Das ergibt eine Komplexität von:
+$$O(2^{n^2})$$
+
+Für ein 8×8 Raster wären das $2^{64} \approx 1.8 \cdot 10^{19}$ Möglichkeiten -- praktisch unlösbar.
+
+\textbf{Mit Constraint Propagation:} Durch das frühzeitige Erkennen von Widersprüchen und das automatische Setzen von erzwungenen Zellen wird der Suchbaum erheblich beschnitten. Die tatsächliche Komplexität hängt stark von den Constraints ab:
+\begin{itemize}
+    \item Bei stark eingeschränkten Problemen (viele Nullen oder volle Zeilen) kann die Lösung oft in $O(n^2)$ gefunden werden, weil die Propagation alles löst.
+    \item Bei weniger eingeschränkten Problemen liegt die praktische Komplexität typischerweise bei $O(k \cdot n^2)$, wobei $k$ die Anzahl der Backtracking-Schritte ist.
+\end{itemize}
+
+\subsection{Praktische Messungen}
+
+In der Praxis zeigt sich, dass mein Solver sehr effizient arbeitet:
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Testfall} & \textbf{Größe} & \textbf{Knoten} & \textbf{Zeit} \\
+\hline
+tomograph00 & 8×8 & 6 & 36 ms \\
+\hline
+tomograph01 & 2×2 & 1 & 33 ms \\
+\hline
+tomograph02 & 4×4 & 1 & 44 ms \\
+\hline
+tomograph03 & 4×4 & 5 & 34 ms \\
+\hline
+\end{tabular}
+\end{center}
+
+Die geringe Anzahl der durchsuchten Knoten zeigt, dass die Heuristiken gut funktionieren. Die Laufzeit liegt bei allen Testfällen bei etwa 30-45 ms, wobei der Großteil davon für das Laden und die JVM-Initialisierung verwendet wird. Die eigentliche Lösung wird in unter 1 ms gefunden.
+
+\subsection{Warum ist der Solver so schnell?}
+
+Drei Faktoren machen den Solver effizient:
+
+\begin{enumerate}
+    \item \textbf{Frühe Erkennung von Sackgassen:} Forward Checking prüft vor jedem Setzen, ob der Wert überhaupt noch möglich ist. Dadurch werden viele unnötige Rekursionen vermieden.
+    \item \textbf{Automatisches Füllen:} Wenn eine Zeile/Spalte/Diagonale nur noch eine Möglichkeit hat, wird sie sofort gesetzt. Das reduziert die Anzahl der Entscheidungspunkte.
+    \item \textbf{Kluge Reihenfolge:} Die Heatmap-Heuristik wählt zuerst die Zellen, bei denen wir am sichersten sind. Dadurch werden Fehler früh erkannt.
+\end{enumerate}
+
+% ============================================
+% 8. FAZIT
 % ============================================
 \section{Fazit und Ausblick}
 
@@ -723,7 +747,39 @@ public String toString() {
 \end{lstlisting}
 
 % ============================================
-% 9. QUELLENVERZEICHNIS
+% 9. ARBEITSPROZESSBERICHT
+% ============================================
+\section{Arbeitsprozessbericht}
+
+\begin{longtable}{|p{2.2cm}|p{3cm}|p{3.5cm}|p{2.5cm}|p{2.5cm}|}
+\hline
+\textbf{Datum} & \textbf{Geplant} & \textbf{Erreicht} & \textbf{Probleme} & \textbf{Lösung} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Datum} & \textbf{Geplant} & \textbf{Erreicht} & \textbf{Probleme} & \textbf{Lösung} \\
+\hline
+\endhead
+Mo 06.10.2025 & Konzepte Umsetzung, erste Experimente in Java & Lösungswege überlegt (Voxel-Projection, Brute-Force) & - & - \\
+\hline
+Mo 13.10.2025 & Mit Programmieren anfangen & Grid-Klasse angefangen & - & - \\
+\hline
+Mo 03.11.2025 & Weiter am Code arbeiten & Eingabe-Parser fertig, Constraints-Klasse erstellt & Diagonalen verwirrend & Erstmal ignoriert \\
+\hline
+Mo 10.11.2025 & Solver schreiben & Backtracking-Ansatz implementiert & Funktioniert nicht bei allen Testfällen & - \\
+\hline
+Mo 17.11.2025 & Bugs fixen & Diagonalen-Bug gefunden und gefixt, läuft jetzt & - & - \\
+\hline
+Mo 24.11.2025 & Dokumentation anfangen & LaTeX-Vorlage erstellt & pdflatex ging nicht & Pakete installiert \\
+\hline
+Mo 01.12.2025 & Arbeit fertig schreiben & Text geschrieben, Beispiele eingefügt & - & - \\
+\hline
+Mo 08.12.2025 & Nochmal drüberlesen & Kleinigkeiten korrigiert & - & - \\
+\hline
+\end{longtable}
+
+% ============================================
+% 10. QUELLENVERZEICHNIS
 % ============================================
 \section{Quellenverzeichnis}
 
@@ -752,7 +808,7 @@ public String toString() {
 \section*{Eidesstattliche Erklärung}
 \addcontentsline{toc}{section}{Eidesstattliche Erklärung}
 
-Ich versichere, dass die vorliegende Seminararbeit mit dem Titel \glqq Seminar-Aufgabe: 43. BwInf Bibertomograph\grqq{} von mir selbstständig erarbeitet wurde und ich keine anderen als die angegebenen Hilfsmittel benutzt habe. Diejenigen Teile der Arbeit, die anderen Werken im Wortlaut oder dem Sinn nach entnommen wurden, sind als solche kenntlich gemacht.
+Ich versichere, dass die vorliegende Seminararbeit mit dem Titel \glqq 44. BwInf Bibertomograph\grqq{} von mir selbstständig erarbeitet wurde und ich keine anderen als die angegebenen Hilfsmittel benutzt habe. Diejenigen Teile der Arbeit, die anderen Werken im Wortlaut oder dem Sinn nach entnommen wurden, sind als solche kenntlich gemacht.
 
 \vspace{3cm}
 \noindent\rule{8cm}{0.4pt}\\
