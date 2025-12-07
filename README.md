@@ -1,10 +1,45 @@
 # Bibertomograph
 
-Dokumentation der Seminararbeit zur vierten Aufgabe des Bundeswettbewerbs Informatik: Gegeben sind Summen über die horizontalen, vertikalen und diagonalen Sichtlinien einer gerasterten Fläche. Gesucht ist eine Rekonstruktion der eigentlichen Figur aus gefüllten und leeren Feldern.
+Seminararbeit zur Aufgabe 4 des Bundeswettbewerbs Informatik (BwInf).
 
-## Aufgabenstellung
-- Für eine beliebige \(n \times n\)-Fläche werden die Summen entlang aller Zeilen, Spalten sowie beider Diagonalsysteme (↘ und ↙) eingelesen.
-- Aus diesen Summen soll das Programm eine konsistente Belegung rekonstruieren.
-- Falls mehrere Lösungen existieren, sind alle nicht eindeutig bestimmbaren Felder durch `?` zu kennzeichnen.
-- Das entwickelte Programm wird anschließend auf sämtliche Beispiele der offiziellen BWINF-Webseite angewendet und die Ergebnisse werden protokolliert.
+## Worum gehts?
+
+Man hat ein n×n Raster und kennt nur die Summen der gefüllten Felder in jeder Zeile, Spalte und Diagonale. Daraus soll das Programm die ursprüngliche Figur rekonstruieren. Falls es mehrere Lösungen gibt, werden die unsicheren Felder mit `?` markiert.
+
+## Wie funktionierts?
+
+Der Solver nutzt Backtracking mit ein paar Tricks:
+- Wenn klar ist was in eine Zelle muss, wird sie direkt gesetzt (Constraint Propagation)
+- Eine Heatmap schätzt für jede Zelle wie wahrscheinlich sie gefüllt ist
+- Bevor ein Wert gesetzt wird, wird geprüft ob er überhaupt noch möglich ist
+
+## Projektstruktur
+
+```
+├── src/
+│   ├── Main.java
+│   ├── Grid.java
+│   ├── Constraints.java
+│   ├── InputParser.java
+│   └── HeuristicSolver.java
+├── testdata/
+│   ├── tomograph00.txt
+│   ├── tomograph01.txt
+│   └── ...
+└── README.md
+```
+
+## Ausführen
+
+```bash
+cd src
+javac *.java
+java Main ../testdata/tomograph02.txt
+```
+
+## Ausgabe
+
+- `#` = gefüllt
+- `.` = leer
+- `?` = mehrdeutig
 
