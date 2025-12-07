@@ -50,3 +50,6 @@ java Main ../testdata/tomograph02.txt
 - `.` = leer
 - `?` = mehrdeutig
 
+## Dokumentation
+
+Die vollständige Seminararbeit mit theoretischen Grundlagen, Algorithmusbeschreibung und Beispielen findest du in [docs/main.pdf](docs/main.pdf).

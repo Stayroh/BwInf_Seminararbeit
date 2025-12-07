@@ -1,4 +1,11 @@
 https://bwinf.de/bundeswettbewerb/44/#c5529 (letzter aufruf: 7.12.2025)
 https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html (letzter aufruf: 6.12.2025)
-https://www.youtube.com/watch?v=m-b51C82-UE (letzter aufruf: 2.12.2025)
+https://www.gm.th-koeln.de/~hk/lehre/ala/ws0506/Praktikum/Projekt/C_blau/Backtracking_final.pdf (letzter aufruf: 5.11.2025)
+https://www.geeksforgeeks.org/artificial-intelligence/constraint-satisfaction-problems-csp-in-artificial-intelligence/ (letzter aufruf: 4.12.2025)
+https://www.youtube.com/watch?v=m-b51C82-UE (letzter aufruf: 2.12.2025) (Video zu Voxeltracing für heatmap)
 https://www.researchgate.net/figure/Heuristic-brute-force-comparison-The-results-of-our-experiment-comparing-our-heuristic_tbl1_24017925 (letzter aufruf: 28.11.2025)
+
+[Tools]
+VSCode mit Java Extension Pack
+Github
+Github Copilot
