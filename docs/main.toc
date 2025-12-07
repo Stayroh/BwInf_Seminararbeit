@@ -10,29 +10,26 @@
 \contentsline {section}{\numberline {3}Programmstruktur}{3}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Übersicht der Klassen}{4}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Main.java -- Hauptprogramm}{4}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Grid.java -- Das Raster}{5}{subsection.3.3}%
-\contentsline {section}{\numberline {4}Der Solver-Algorithmus}{6}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Die Heatmap-Heuristik}{6}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Backtracking mit Heuristik}{7}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Constraint Propagation}{8}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Forward Checking}{9}{subsection.4.4}%
-\contentsline {section}{\numberline {5}Eingabe und Ausgabe}{10}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Eingabeformat}{10}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Ausgabeformat}{11}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Ausführung}{11}{subsection.5.3}%
-\contentsline {section}{\numberline {6}Beispiele aus dem Wettbewerb}{11}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Erläuterung der Beispiele}{12}{subsection.6.1}%
-\contentsline {section}{\numberline {7}Laufzeit und Performance}{12}{section.7}%
-\contentsline {subsection}{\numberline {7.1}Theoretische Komplexität}{12}{subsection.7.1}%
-\contentsline {subsection}{\numberline {7.2}Praktische Messungen}{12}{subsection.7.2}%
-\contentsline {subsection}{\numberline {7.3}Warum ist der Solver so schnell?}{13}{subsection.7.3}%
-\contentsline {section}{\numberline {8}Fazit und Ausblick}{13}{section.8}%
-\contentsline {subsection}{\numberline {8.1}Was funktioniert gut?}{13}{subsection.8.1}%
-\contentsline {subsection}{\numberline {8.2}Was war schwierig?}{13}{subsection.8.2}%
-\contentsline {subsection}{\numberline {8.3}Mögliche Verbesserungen}{14}{subsection.8.3}%
-\contentsline {section}{\numberline {9}Quellcode}{14}{section.9}%
-\contentsline {subsection}{\numberline {9.1}Constraints.java -- Vollständig}{14}{subsection.9.1}%
-\contentsline {subsection}{\numberline {9.2}Grid.java -- toString Methode}{15}{subsection.9.2}%
-\contentsline {section}{\numberline {10}Arbeitsprozessbericht}{15}{section.10}%
-\contentsline {section}{\numberline {11}Quellenverzeichnis}{16}{section.11}%
-\contentsline {section}{Eidesstattliche Erklärung}{17}{section*.2}%
+\contentsline {subsection}{\numberline {3.3}Grid.java -- Das Raster}{4}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Der Solver-Algorithmus}{5}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Die Heatmap-Heuristik}{5}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Backtracking mit Heuristik}{5}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Constraint Propagation}{6}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Forward Checking}{6}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Eingabe und Ausgabe}{7}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Eingabeformat}{7}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Ausgabeformat}{7}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Ausführung}{7}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Beispiele aus dem Wettbewerb}{8}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Erläuterung der Beispiele}{8}{subsection.6.1}%
+\contentsline {section}{\numberline {7}Laufzeit und Performance}{8}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Theoretische Komplexität}{8}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Praktische Messungen}{9}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Warum ist der Solver so schnell?}{9}{subsection.7.3}%
+\contentsline {section}{\numberline {8}Fazit und Ausblick}{10}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Was funktioniert gut?}{10}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Was war schwierig?}{10}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Mögliche Verbesserungen}{10}{subsection.8.3}%
+\contentsline {section}{\numberline {9}Arbeitsprozessbericht}{10}{section.9}%
+\contentsline {section}{\numberline {10}Quellenverzeichnis}{11}{section.10}%
+\contentsline {section}{Eidesstattliche Erklärung}{13}{section*.2}%

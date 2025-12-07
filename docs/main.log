@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.12.7)  7 DEC 2025 23:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2026/dev/Arch Linux) (preloaded format=pdflatex 2025.12.7)  8 DEC 2025 00:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -516,7 +516,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.36 ...{10}Arbeitsprozessbericht}{15}{section.10}
+l.35 ...idesstattliche ErklÃ¤rung}{13}{section*.2}
                                                   % [1])
 \tf@toc=\write4
 \openout4 = `main.toc'.
@@ -541,180 +541,179 @@ been already used, duplicate ignored
 l.191 \end{enumerate}
                       [2]
 
-[3] (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
+[3]
+
+[4] (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 241.
+nput line 281.
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 242.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 302.
 
-
-[4]
 
 [5]
 
 [6]
+Overfull \hbox (0.5127pt too wide) in paragraph at lines 372--373
+[]\T1/cmr/m/n/12 Die \T1/cmtt/m/n/12 InputParser\T1/cmr/m/n/12 -Klasse liest di
+e-se Wer-te zei-len-wei-se ein und er-zeugt ein \T1/cmtt/m/n/12 Constraints\T1/
+cmr/m/n/12 -
+ []
+
+
 
 [7]
 
 [8]
 
 [9]
-
-[10]
-
-[11]
-
-[12]
-
-[13]
-
-[14]
-Underfull \hbox (badness 10000) in paragraph at lines 763--763
+Underfull \hbox (badness 10000) in paragraph at lines 544--544
 []|\T1/cmr/m/n/12 Mo
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 763--763
+Underfull \hbox (badness 10000) in paragraph at lines 544--544
 []|\T1/cmr/m/n/12 Konzepte Um-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 763--763
+Underfull \hbox (badness 10000) in paragraph at lines 544--544
 \T1/cmr/m/n/12 set-zung, ers-te
  []
 
 
-Underfull \hbox (badness 3746) in paragraph at lines 763--763
+Underfull \hbox (badness 3746) in paragraph at lines 544--544
 \T1/cmr/m/n/12 Ex-pe-ri-men-te in
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 763--763
+Underfull \hbox (badness 10000) in paragraph at lines 544--544
 []|\T1/cmr/m/n/12 Lösungswege
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 763--763
+Underfull \hbox (badness 10000) in paragraph at lines 544--544
 \T1/cmr/m/n/12 über-legt (Voxel-
  []
 
 
-Underfull \hbox (badness 2772) in paragraph at lines 763--763
+Underfull \hbox (badness 2772) in paragraph at lines 544--544
 \T1/cmr/m/n/12 Projection, Brute-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 765--765
+Underfull \hbox (badness 10000) in paragraph at lines 546--546
 []|\T1/cmr/m/n/12 Mo
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 765--765
+Underfull \hbox (badness 10000) in paragraph at lines 546--546
 []|\T1/cmr/m/n/12 Mit Pro-gram-
  []
 
 
-Underfull \hbox (badness 6842) in paragraph at lines 765--765
+Underfull \hbox (badness 6842) in paragraph at lines 546--546
 []|\T1/cmr/m/n/12 Grid-Klasse an-ge-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 767--767
+Underfull \hbox (badness 10000) in paragraph at lines 548--548
 []|\T1/cmr/m/n/12 Mo
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 767--767
+Underfull \hbox (badness 10000) in paragraph at lines 548--548
 []|\T1/cmr/m/n/12 Eingabe-Parser
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 767--767
+Underfull \hbox (badness 10000) in paragraph at lines 548--548
 []|\T1/cmr/m/n/12 Diagonalen
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 769--769
+Underfull \hbox (badness 10000) in paragraph at lines 550--550
 []|\T1/cmr/m/n/12 Mo
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 769--769
+Underfull \hbox (badness 10000) in paragraph at lines 550--550
 []|\T1/cmr/m/n/12 Backtracking-
  []
 
 
-Underfull \hbox (badness 3690) in paragraph at lines 769--769
+Underfull \hbox (badness 3690) in paragraph at lines 550--550
 \T1/cmr/m/n/12 Ansatz im-ple-men-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 769--769
+Underfull \hbox (badness 10000) in paragraph at lines 550--550
 []|\T1/cmr/m/n/12 Funktioniert
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 771--771
+Underfull \hbox (badness 10000) in paragraph at lines 552--552
 []|\T1/cmr/m/n/12 Mo
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 773--773
+Underfull \hbox (badness 10000) in paragraph at lines 554--554
 []|\T1/cmr/m/n/12 Mo
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 773--773
+Underfull \hbox (badness 10000) in paragraph at lines 554--554
 []|\T1/cmr/m/n/12 Dokumentation
  []
 
 
-Underfull \hbox (badness 1472) in paragraph at lines 773--773
+Underfull \hbox (badness 1472) in paragraph at lines 554--554
 []|\T1/cmr/m/n/12 LaTeX-Vorlage er-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 775--775
+Underfull \hbox (badness 10000) in paragraph at lines 556--556
 []|\T1/cmr/m/n/12 Mo
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 775--775
+Underfull \hbox (badness 10000) in paragraph at lines 556--556
 []|\T1/cmr/m/n/12 Arbeit fer-tig
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 775--775
+Underfull \hbox (badness 10000) in paragraph at lines 556--556
 []|\T1/cmr/m/n/12 Text ge-schrie-ben,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 777--777
+Underfull \hbox (badness 10000) in paragraph at lines 558--558
 []|\T1/cmr/m/n/12 Mo
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 777--777
+Underfull \hbox (badness 10000) in paragraph at lines 558--558
 []|\T1/cmr/m/n/12 Nochmal drü-
  []
 
-[15]
-Overfull \hbox (25.29553pt too wide) in paragraph at lines 795--798
+[10]
+Overfull \hbox (25.29553pt too wide) in paragraph at lines 576--579
 [][]$\T1/cmtt/m/n/12 https : / / www . gm . th-[]koeln . de / ~hk / lehre / ala
  / ws0506 / Praktikum / Projekt / C _ blau /
  []
 
 
-Overfull \hbox (306.10269pt too wide) in paragraph at lines 799--802
+Overfull \hbox (306.10269pt too wide) in paragraph at lines 580--583
 [][]$\T1/cmtt/m/n/12 https : / / www . geeksforgeeks . org / artificial-[]intel
 ligence / constraint-[]satisfaction-[]problems-[]csp-[]in-[]artificial-[]intell
 igence/$[][] 
  []
 
 
-Overfull \hbox (338.97015pt too wide) in paragraph at lines 807--810
+
+[11]
+Overfull \hbox (338.97015pt too wide) in paragraph at lines 588--591
 [][]$\T1/cmtt/m/n/12 https : / / www . researchgate . net / figure / Heuristic-
 []brute-[]force-[]comparison-[]The-[]results-[]of-[]our-[]experiment-[]comparin
 g-[]our-[]heuristic _
@@ -722,29 +721,29 @@ g-[]our-[]heuristic _
 
 
 
-[16]
+[12]
 
-[17] (./main.aux)
+[13] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: C14A5E9DB987760F25453CE68DA641EA;5997.
+(rerunfilecheck)             Checksum: E3726826DC3DBCC7B00331402F522E01;5477.
  ) 
 Here is how much of TeX's memory you used:
- 14312 strings out of 475118
- 216132 string characters out of 5764902
- 1067404 words of memory out of 5000000
- 36797 multiletter control sequences out of 15000+600000
+ 14013 strings out of 475118
+ 212019 string characters out of 5764902
+ 936986 words of memory out of 5000000
+ 36732 multiletter control sequences out of 15000+600000
  577982 words of font info for 78 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,12n,79p,1064b,2065s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,1064b,2063s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </home/jakob/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecit1095.600pk> 
 </home/jakob/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1095.600pk> </h
 ome/jakob/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/tcbx1200.600pk> </home
-/jakob/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecit1000.600pk> </home/ja
-kob/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </home/jakob
+/jakob/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </home/ja
+kob/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecit1000.600pk> </home/jakob
 /.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0600.600pk> </home/jakob/.t
 exlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1200.600pk> </home/jakob/.texl
 ive/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk> </home/jakob/.texlive
@@ -762,10 +761,10 @@ s/cm/cmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
 xmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmsy10.pfb>
-Output written on main.pdf (20 pages, 320412 bytes).
+Output written on main.pdf (16 pages, 282254 bytes).
 PDF statistics:
- 1400 PDF objects out of 1440 (max. 8388607)
- 714 compressed objects within 8 object streams
- 350 named destinations out of 1000 (max. 500000)
- 297 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1051 PDF objects out of 1200 (max. 8388607)
+ 412 compressed objects within 5 object streams
+ 116 named destinations out of 1000 (max. 500000)
+ 273 words of extra memory for PDF output out of 10000 (max. 10000000)
 

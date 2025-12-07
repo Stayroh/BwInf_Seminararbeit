@@ -236,99 +236,32 @@ Mein Programm besteht aus fünf Klassen, die jeweils eine bestimmte Aufgabe habe
 
 \subsection{Main.java -- Hauptprogramm}
 
-Die Main-Klasse ist der Einstiegspunkt. Sie liest die Eingabedatei, startet den Solver und gibt die Ergebnisse formatiert aus.
+Die Main-Klasse ist der Einstiegspunkt und koordiniert den gesamten Ablauf:
 
-\begin{lstlisting}[language=Java, caption=Hauptprogramm (Main.java)]
-public static void main(String[] args) {
-    if (args.length < 1) {
-        System.out.println("Verwendung: java Main <eingabedatei.txt>");
-        System.exit(1);
-    }
-    
-    String filename = args[0];
-    
-    // Eingabe parsen
-    Constraints constraints = InputParser.parse(filename);
-    
-    // Heatmap berechnen und anzeigen
-    double[][] heatmap = constraints.computeHeatmap();
-    
-    // Solver starten
-    HeuristicSolver solver = new HeuristicSolver(constraints);
-    solver.setMaxSolutions(100);
-    
-    List<Grid> solutions = solver.solve();
-    
-    // Ergebnisse ausgeben
-    System.out.println("Gefundene Loesungen: " + solutions.size());
-}
-\end{lstlisting}
+\begin{enumerate}
+    \item Liest den Dateinamen aus den Kommandozeilenargumenten
+    \item Parst die Eingabedatei mit \texttt{InputParser.parse()}
+    \item Berechnet die Heatmap für die Heuristik
+    \item Erstellt einen \texttt{HeuristicSolver} und sammelt bis zu 100 Lösungen
+    \item Gibt die Ergebnisse formatiert aus (Heatmap, Lösungen, Statistiken)
+\end{enumerate}
 
 \subsection{Grid.java -- Das Raster}
 
-Die Grid-Klasse repräsentiert das Spielfeld. Jede Zelle kann drei Zustände haben:
+Die Grid-Klasse repräsentiert das Spielfeld als 2D-Array. Jede Zelle kann drei Zustände haben:
 \begin{itemize}
     \item \texttt{-1}: Noch nicht zugewiesen
     \item \texttt{0}: Leer (wird als \texttt{.} ausgegeben)
     \item \texttt{1}: Gefüllt (wird als \texttt{\#} ausgegeben)
 \end{itemize}
 
-\begin{lstlisting}[language=Java, caption=Grid-Konstruktor und Kopieren]
-public class Grid {
-    private final int size;
-    private final int[][] cells;
-    
-    public Grid(int size) {
-        this.size = size;
-        this.cells = new int[size][size];
-        // Initialisiere alle Zellen als nicht zugewiesen
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                cells[i][j] = -1;
-            }
-        }
-    }
-    
-    // Kopiert das Grid (wichtig fuer Backtracking)
-    public Grid copy() {
-        Grid copy = new Grid(size);
-        for (int i = 0; i < size; i++) {
-            System.arraycopy(cells[i], 0, copy.cells[i], 0, size);
-        }
-        return copy;
-    }
-}
-\end{lstlisting}
+Die Klasse bietet Methoden zum Setzen/Abfragen von Zellen und zum Berechnen der aktuellen Summen. Besonders wichtig ist die \texttt{copy()}-Methode für das Backtracking, da wir bei Fehlversuchen zum vorherigen Zustand zurückkehren müssen.
 
-Wichtig sind die Methoden zum Berechnen der Summen. Für die Diagonalen muss man etwas aufpassen mit der Indexierung:
-
-\begin{lstlisting}[language=Java, caption=Berechnung der Diagonalsummen]
-// Hauptdiagonale: k = row + col, Bereich: 0 bis 2*(size-1)
-public int getDiagDownSum(int k) {
-    int sum = 0;
-    for (int i = 0; i < size; i++) {
-        int j = k - i;
-        if (j >= 0 && j < size && cells[i][j] == 1) {
-            sum++;
-        }
-    }
-    return sum;
-}
-
-// Nebendiagonale: k = col - row + (size-1)
-public int getDiagUpSum(int k) {
-    int sum = 0;
-    for (int i = 0; i < size; i++) {
-        int j = k - (size - 1) + i;
-        if (j >= 0 && j < size && cells[i][j] == 1) {
-            sum++;
-        }
-    }
-    return sum;
-}
-\end{lstlisting}
-
-Die Indexierung der Diagonalen war einer der schwierigsten Teile. Für die Hauptdiagonale gilt $k = \text{row} + \text{col}$, für die Nebendiagonale $k = \text{col} - \text{row} + (n-1)$.
+\textbf{Diagonalen-Indexierung:} Für ein $n \times n$-Raster gibt es $2n-1$ Haupt- und Nebendiagonalen. Die Indexierung war einer der schwierigsten Teile:
+\begin{itemize}
+    \item Hauptdiagonale ($\searrow$): $k = \text{row} + \text{col}$, Bereich: $0$ bis $2n-2$
+    \item Nebendiagonale ($\nearrow$): $k = \text{col} - \text{row} + (n-1)$
+\end{itemize}
 
 % ============================================
 % 4. DER SOLVER-ALGORITHMUS
@@ -339,161 +272,86 @@ Der HeuristicSolver ist das Herzstück meines Programms. Er kombiniert Backtrack
 
 \subsection{Die Heatmap-Heuristik}
 
-Die Heatmap berechnet für jede Zelle einen Wert zwischen 0 und 1, der angibt, wie wahrscheinlich die Zelle gefüllt ist. Dafür betrachte ich alle vier Linien, die durch die Zelle gehen, und berechne deren \glqq Dichte\grqq{}.
+Die Heatmap berechnet für jede Zelle einen Wert zwischen 0 und 1, der angibt, wie wahrscheinlich die Zelle gefüllt ist. Die Berechnung basiert auf der \textbf{Dichte} der vier Linien durch jede Zelle:
 
-\begin{lstlisting}[language=Java, caption=Berechnung der Heatmap]
-public double[][] computeHeatmap() {
-    double[][] heatmap = new double[size][size];
-    
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            // Dichte fuer jede Linie durch diese Zelle
-            double rowDensity = (double) rowSums[i] / size;
-            double colDensity = (double) colSums[j] / size;
-            
-            // Hauptdiagonale: k = i + j
-            int diagDownK = i + j;
-            int diagDownLen = size - Math.abs(diagDownK - (size - 1));
-            double diagDownDensity = (double) getDiagDownSum(diagDownK) / diagDownLen;
-            
-            // Nebendiagonale: k = j - i + (size - 1)
-            int diagUpK = j - i + (size - 1);
-            int diagUpLen = size - Math.abs(diagUpK - (size - 1));
-            double diagUpDensity = (double) getDiagUpSum(diagUpK) / diagUpLen;
-            
-            // Durchschnitt aller Dichten
-            heatmap[i][j] = (rowDensity + colDensity + diagDownDensity + diagUpDensity) / 4.0;
-        }
-    }
-    
-    return heatmap;
-}
+$$\text{Dichte einer Linie} = \frac{\text{Zielsumme}}{\text{Länge der Linie}}$$
+
+Der Heatmap-Wert einer Zelle ist der Durchschnitt der vier Dichten (Zeile, Spalte, beide Diagonalen). Ein hoher Wert (nahe 1) bedeutet, dass die Zelle wahrscheinlich gefüllt ist; ein niedriger Wert (nahe 0) bedeutet wahrscheinlich leer. Werte nahe 0.5 sind unsicher.
+
+\begin{lstlisting}[language=Java, caption=Kernidee der Heatmap]
+// Durchschnitt der vier Liniendichten
+heatmap[i][j] = (rowDensity + colDensity + 
+                 diagDownDensity + diagUpDensity) / 4.0;
 \end{lstlisting}
 
 \subsection{Backtracking mit Heuristik}
 
-Der Backtracking-Algorithmus wählt immer die Zelle aus, bei der wir am \glqq sichersten\grqq{} sind. Das bedeutet: Zellen, deren Heatmap-Wert weit von 0.5 entfernt ist (also klar gefüllt oder klar leer), werden zuerst behandelt.
+Der Backtracking-Algorithmus wählt immer die Zelle aus, bei der wir am \glqq sichersten\grqq{} sind -- also Zellen, deren Heatmap-Wert weit von 0.5 entfernt ist.
 
-\begin{lstlisting}[language=Java, caption=Backtracking-Hauptschleife]
+\textbf{Ablauf:}
+\begin{enumerate}
+    \item \textbf{Zellauswahl:} Wähle die unzugewiesene Zelle mit dem extremsten Heatmap-Wert
+    \item \textbf{Wertreihenfolge:} Bei Heatmap $\geq 0.5$ probiere zuerst 1, sonst zuerst 0
+    \item \textbf{Forward Check:} Prüfe, ob der Wert überhaupt noch möglich ist
+    \item \textbf{Setzen \& Propagieren:} Setze den Wert und führe Constraint Propagation durch
+    \item \textbf{Rekursion:} Gehe zur nächsten Zelle oder speichere die Lösung
+    \item \textbf{Backtrack:} Bei Konflikt probiere den anderen Wert oder gehe zurück
+\end{enumerate}
+
+\begin{lstlisting}[language=Java, caption=Backtracking-Algorithmus]
 private void backtrack(Grid grid) {
-    if (solutions.size() >= maxSolutions) {
-        return;
-    }
-    
+    if (solutions.size() >= maxSolutions) return;
     nodeCount++;
     
     // Waehle naechste Zelle basierend auf Heuristik
     int[] nextCell = selectNextCell(grid);
     
-    // Wenn keine unzugewiesene Zelle mehr, pruefe Loesung
+    // Alle Zellen zugewiesen? Pruefe Loesung
     if (nextCell == null) {
-        if (isValidSolution(grid)) {
-            solutions.add(grid.copy());
-        }
+        if (isValidSolution(grid)) solutions.add(grid.copy());
         return;
     }
     
-    int row = nextCell[0];
-    int col = nextCell[1];
+    int row = nextCell[0], col = nextCell[1];
     
-    // Reihenfolge der Werte basierend auf Heatmap
-    int[] valuesToTry;
-    if (heatmap[row][col] >= 0.5) {
-        valuesToTry = new int[]{1, 0};
-    } else {
-        valuesToTry = new int[]{0, 1};
-    }
+    // Reihenfolge basierend auf Heatmap
+    int[] valuesToTry = (heatmap[row][col] >= 0.5) 
+        ? new int[]{1, 0} : new int[]{0, 1};
     
     for (int value : valuesToTry) {
-        // Forward Check
-        if (!isValueFeasible(grid, row, col, value)) {
-            continue;
-        }
-        
+        if (!isValueFeasible(grid, row, col, value)) continue;
         Grid newGrid = grid.copy();
         newGrid.set(row, col, value);
-        
-        // Constraint Propagation
-        if (propagate(newGrid)) {
-            backtrack(newGrid);
-        }
+        if (propagate(newGrid)) backtrack(newGrid);
     }
 }
 \end{lstlisting}
 
 \subsection{Constraint Propagation}
 
-Die Propagation prüft alle Zeilen, Spalten und Diagonalen. Wenn eine Linie \glqq erzwungen\grqq{} ist, werden die Zellen automatisch gesetzt.
+Die Propagation prüft nach jedem gesetzten Wert alle Zeilen, Spalten und Diagonalen auf zwei wichtige Fälle:
 
-\begin{lstlisting}[language=Java, caption=Propagation fuer eine Zeile/Spalte]
-private int propagateLine(Grid grid, int index, boolean isRow) {
-    int sum = isRow ? grid.getRowSum(index) : grid.getColSum(index);
-    int unassigned = isRow ? grid.getRowUnassigned(index) : grid.getColUnassigned(index);
-    int target = isRow ? constraints.getRowSum(index) : constraints.getColSum(index);
-    
-    int remaining = target - sum;
-    
-    // Konflikt: Mehr gefuellt als erlaubt
-    if (remaining < 0) return -1;
-    
-    // Konflikt: Nicht genug Platz
-    if (remaining > unassigned) return -1;
-    
-    // Alle verbleibenden muessen 1 sein
-    if (remaining == unassigned) {
-        for (int k = 0; k < size; k++) {
-            int i = isRow ? index : k;
-            int j = isRow ? k : index;
-            if (!grid.isAssigned(i, j)) {
-                grid.set(i, j, 1);
-            }
-        }
-    }
-    
-    // Summe erreicht: alle verbleibenden muessen 0 sein
-    if (remaining == 0) {
-        for (int k = 0; k < size; k++) {
-            int i = isRow ? index : k;
-            int j = isRow ? k : index;
-            if (!grid.isAssigned(i, j)) {
-                grid.set(i, j, 0);
-            }
-        }
-    }
-    
-    return 0;
-}
-\end{lstlisting}
+\begin{itemize}
+    \item \textbf{Konflikt erkennen:} Wenn bereits mehr Zellen gefüllt sind als die Zielsumme erlaubt, oder wenn nicht genug leere Zellen übrig sind, liegt ein Widerspruch vor $\rightarrow$ Backtrack.
+    \item \textbf{Erzwungene Werte setzen:} 
+    \begin{itemize}
+        \item Wenn $\text{remaining} = \text{unassigned}$: Alle verbleibenden Zellen müssen 1 sein
+        \item Wenn $\text{remaining} = 0$: Alle verbleibenden Zellen müssen 0 sein
+    \end{itemize}
+\end{itemize}
+
+Durch das automatische Setzen erzwungener Werte können oft ganze Bereiche ohne Backtracking gelöst werden. Die Propagation wird wiederholt, bis keine neuen Werte mehr gesetzt werden.
 
 \subsection{Forward Checking}
 
-Forward Checking prüft, ob ein Wert überhaupt noch möglich ist, bevor wir ihn ausprobieren. Das spart viele unnötige Backtracking-Schritte.
+Forward Checking prüft \textit{vor} dem Setzen eines Wertes, ob dieser überhaupt noch möglich ist. Das spart viele unnötige Rekursionen:
 
-\begin{lstlisting}[language=Java, caption=Forward Checking]
-private boolean isValueFeasible(Grid grid, int row, int col, int value) {
-    if (value == 1) {
-        // Pruefe ob wir noch Platz fuer eine 1 haben
-        if (grid.getRowSum(row) >= constraints.getRowSum(row)) return false;
-        if (grid.getColSum(col) >= constraints.getColSum(col)) return false;
-        
-        int diagDownK = row + col;
-        if (grid.getDiagDownSum(diagDownK) >= constraints.getDiagDownSum(diagDownK)) 
-            return false;
-        
-        int diagUpK = col - row + (size - 1);
-        if (grid.getDiagUpSum(diagUpK) >= constraints.getDiagUpSum(diagUpK)) 
-            return false;
-    } else {
-        // Pruefe ob genug Platz fuer benoetigte 1en bleibt
-        int rowRemaining = constraints.getRowSum(row) - grid.getRowSum(row);
-        if (grid.getRowUnassigned(row) - 1 < rowRemaining) return false;
-        
-        // ... analog fuer Spalte und Diagonalen
-    }
-    
-    return true;
-}
-\end{lstlisting}
+\begin{itemize}
+    \item \textbf{Für value = 1:} Prüfe, ob in allen vier Linien noch Platz für eine weitere gefüllte Zelle ist (aktuelle Summe $<$ Zielsumme).
+    \item \textbf{Für value = 0:} Prüfe, ob nach dem Setzen auf 0 noch genügend leere Zellen übrig bleiben, um die benötigte Anzahl gefüllter Zellen zu erreichen.
+\end{itemize}
+
+Durch diese Vorprüfung werden offensichtlich ungültige Werte sofort verworfen, ohne dass erst ein Widerspruch durch Propagation gefunden werden muss.
 
 % ============================================
 % 5. EINGABE UND AUSGABE
@@ -511,28 +369,7 @@ Die Eingabedateien haben ein einfaches Format:
     \item Zeile 5: Die $2n-1$ Nebendiagonalsummen
 \end{enumerate}
 
-\begin{lstlisting}[language=Java, caption=Parsen der Eingabedatei]
-public static Constraints parse(String filename) throws IOException {
-    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-        // 1. Zeile: Groesse n
-        int size = Integer.parseInt(reader.readLine().trim());
-        
-        // 2. Zeile: Spaltensummen
-        int[] colSums = parseIntArray(reader.readLine(), size);
-        
-        // 3. Zeile: Zeilensummen
-        int[] rowSums = parseIntArray(reader.readLine(), size);
-        
-        // 4. Zeile: Hauptdiagonalsummen (2*n - 1 Werte)
-        int[] diagDownSums = parseIntArray(reader.readLine(), 2 * size - 1);
-        
-        // 5. Zeile: Nebendiagonalsummen
-        int[] diagUpSums = parseIntArray(reader.readLine(), 2 * size - 1);
-        
-        return new Constraints(size, colSums, rowSums, diagDownSums, diagUpSums);
-    }
-}
-\end{lstlisting}
+Die \texttt{InputParser}-Klasse liest diese Werte zeilenweise ein und erzeugt ein \texttt{Constraints}-Objekt.
 
 \subsection{Ausgabeformat}
 
@@ -691,63 +528,7 @@ Die größten Herausforderungen waren:
 \end{itemize}
 
 % ============================================
-% 8. QUELLCODE (ANHANG)
-% ============================================
-\section{Quellcode}
-
-Im Folgenden sind die wichtigsten Teile des Quellcodes dokumentiert.
-
-\subsection{Constraints.java -- Vollständig}
-
-\begin{lstlisting}[language=Java, caption=Constraints.java]
-public class Constraints {
-    private final int size;
-    private final int[] colSums;
-    private final int[] rowSums;
-    private final int[] diagDownSums;
-    private final int[] diagUpSums;
-    
-    public Constraints(int size, int[] colSums, int[] rowSums, 
-                       int[] diagDownSums, int[] diagUpSums) {
-        this.size = size;
-        this.colSums = colSums;
-        this.rowSums = rowSums;
-        this.diagDownSums = diagDownSums;
-        this.diagUpSums = diagUpSums;
-    }
-    
-    public int getSize() { return size; }
-    public int getColSum(int col) { return colSums[col]; }
-    public int getRowSum(int row) { return rowSums[row]; }
-    public int getDiagDownSum(int k) { return diagDownSums[k]; }
-    public int getDiagUpSum(int k) { return diagUpSums[k]; }
-}
-\end{lstlisting}
-
-\subsection{Grid.java -- toString Methode}
-
-\begin{lstlisting}[language=Java, caption=Ausgabe des Rasters]
-@Override
-public String toString() {
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            if (cells[i][j] == 1) {
-                sb.append('#');
-            } else if (cells[i][j] == 0) {
-                sb.append('.');
-            } else {
-                sb.append('?');
-            }
-        }
-        sb.append('\n');
-    }
-    return sb.toString();
-}
-\end{lstlisting}
-
-% ============================================
-% 9. ARBEITSPROZESSBERICHT
+% 8. ARBEITSPROZESSBERICHT
 % ============================================
 \section{Arbeitsprozessbericht}
 

@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1765146476.1765 "/home/jakob/Documents/Schule/Seminar/BwInf_Seminararbeit/docs/main.tex" "main.pdf" "main" 1765146476.54643 0
+["pdflatex"] 1765148875.88716 "/home/jakob/Documents/Schule/Seminar/BwInf_Seminararbeit/docs/main.tex" "main.pdf" "main" 1765148876.20888 0
   "/home/jakob/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk" 1765122405.85944 31928 d31f67889b0d8a5a19f16153a295d630 ""
   "/home/jakob/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk" 1765122382.25769 40112 b56c605f71ed2abb52127e5a7344cc7a ""
   "/home/jakob/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk" 1765122382.47369 49076 4045568074b837e38169483d3c86b34d ""
@@ -17,7 +17,7 @@
   "/home/jakob/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.600pk" 1765122381.80947 24132 29d9faa3f1399814d672a74c00901645 ""
   "/home/jakob/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/tcbx1200.600pk" 1765141384.95395 15056 eaa2c62760c91dc8a8bb93a563475e30 ""
   "/home/jakob/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk" 1765122382.00441 14040 62d8baffa68d0dff1dcb2a185220668a ""
-  "/home/jakob/Documents/Schule/Seminar/BwInf_Seminararbeit/docs/main.tex" 1765146475.93389 32635 726da1f1b9887f49aa49002c0ce45dac ""
+  "/home/jakob/Documents/Schule/Seminar/BwInf_Seminararbeit/docs/main.tex" 1765148875.41622 30129 fac0b204a15b9194d6fae2b421cdac3f ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1755987285 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1755987285 3584 13049b61b922a28b158a38aeff75ee9b ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecbx1728.tfm" 1755987285 3584 ad49a18d8515beef6d92d4d3f197d0fd ""
@@ -131,10 +131,10 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1755987285 42087 b0f9697c952c8f5a8eede4134282cb0d ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1765122372 27758 38728abbce47239bb9c148cdc8c9e373 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1765122367 2492038 07cceefa921c9fb1de4ae185271a49d3 ""
-  "main.aux" 1765146476.50205 6371 4e56f8ec6af6570bee6b134e2834a43f "pdflatex"
-  "main.out" 1765146476.50205 5997 c14a5e9db987760f25453ce68da641ea "pdflatex"
-  "main.tex" 1765146475.93389 32635 726da1f1b9887f49aa49002c0ce45dac ""
-  "main.toc" 1765146476.50335 3143 abd5a00b133cce13d273df62fc1a1a38 "pdflatex"
+  "main.aux" 1765148876.16468 5613 ddd52f0b9a6a884a5e3a7b97932a482a "pdflatex"
+  "main.out" 1765148876.16568 5477 e3726826dc3dbcc7b00331402f522e01 "pdflatex"
+  "main.tex" 1765148875.41622 30129 fac0b204a15b9194d6fae2b421cdac3f ""
+  "main.toc" 1765148876.16667 2880 40a9932d3838f62a767879cc427fcc7e "pdflatex"
   (generated)
   "main.aux"
   "main.log"
