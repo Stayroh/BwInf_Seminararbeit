@@ -23,6 +23,10 @@ Der Solver nutzt Backtracking mit ein paar Tricks:
 ## Projektstruktur
 
 ```
+├── docs/
+│   ├── arbeitsprozessbericht.json
+│   ├── main.tex
+│   └── main.pdf
 ├── src/
 │   ├── Main.java
 │   ├── Grid.java
